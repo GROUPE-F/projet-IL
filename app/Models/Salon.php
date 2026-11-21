@@ -30,4 +30,9 @@ class Salon extends Model
             $salon->code = Str::upper(Str::random(8));
         });
     }
+
+    public function lienInvitation()
+    {
+        return url('/salon/' . $this->code);
+    }
 }
