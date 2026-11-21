@@ -19,6 +19,10 @@ class Salon extends Model
         'date_creation',
     ];
 
+    protected $hidden = [
+        'mot_de_passe',
+    ];
+
     protected $casts = [
         'actif' => 'boolean',
         'date_creation' => 'datetime',
