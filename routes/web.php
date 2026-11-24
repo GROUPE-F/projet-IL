@@ -25,3 +25,20 @@ Route::get('/salon/{code}', function (Request $request, $code) {
 
     return $salon;
 });
+
+Route::post('/salon', function (Request $request) {
+
+    $request->validate([
+        'nom' => 'required',
+        'visibilite' => 'required|in:PUBLIC,PRIVE',
+    ]);
+
+    $salon = Salon::create([
+        'nom' => $request->nom,
+        'visibilite' => $request->visibilite,
+        'mot_de_passe' => $request->mot_de_passe,
+        'actif' => true,
+    ]);
+
+    return $salon;
+});
