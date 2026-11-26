@@ -42,3 +42,20 @@ Route::post('/salon', function (Request $request) {
 
     return $salon;
 });
+Route::post('/salon/{code}/video', function (Request $request, $code) {
+
+    $request->validate([
+        'etat' => 'required|in:lecture,pause',
+        'position' => 'required|numeric|min:0',
+    ]);
+
+    $salon = Salon::where('code', $code)->firstOrFail();
+
+    event(new \App\Events\VideoStateChanged(
+        $salon->code,
+        $request->etat,
+        (float) $request->position
+    ));
+
+    return response()->json(['ok' => true]);
+});
