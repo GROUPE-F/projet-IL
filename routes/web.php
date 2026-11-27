@@ -17,7 +17,6 @@ Route::get('/salon/{code}', function (Request $request, $code) {
     }
 
     if ($salon->visibilite === 'PRIVE') {
-
         if ($request->mot_de_passe != $salon->mot_de_passe) {
             return 'Mot de passe incorrect ou manquant.';
         }
@@ -31,6 +30,7 @@ Route::post('/salon', function (Request $request) {
     $request->validate([
         'nom' => 'required',
         'visibilite' => 'required|in:PUBLIC,PRIVE',
+        'mot_de_passe' => 'required_if:visibilite,PRIVE|nullable|string',
     ]);
 
     $salon = Salon::create([
